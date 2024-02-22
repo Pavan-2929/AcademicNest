@@ -27,7 +27,7 @@ function Header() {
     >
       <div className="md:flex justify-around items-center">
         <div className="text-[2rem] flex justify-around items-center relative">
-          <span className="text-red-500 animate-fire">Auth</span>
+          <span className="text-red-500 animate-fire">AcademicNest</span>
           <div onClick={toggleMenu} className="md:hidden">
             {isMenuOpen ? <FaTimes /> : <FaBars />}
           </div>
