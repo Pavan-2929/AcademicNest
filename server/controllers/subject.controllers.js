@@ -1,4 +1,5 @@
 import Subject from "../models/subject.model.js";
+import errorHanlder from "../utils/error.js";
 
 export const getSubjectData = async (req, res, next) => {
   try {
@@ -9,6 +10,7 @@ export const getSubjectData = async (req, res, next) => {
     res.json(semInfo);
   } catch (error) {
     console.log(error);
+    next();
   }
 };
 
@@ -19,6 +21,7 @@ export const getAllSubject = async (req, res, next) => {
     res.status(200).json(allSubjects);
   } catch (error) {
     console.log(error);
+    next();
   }
 };
 
@@ -37,6 +40,7 @@ export const addMaterial = async (req, res, next) => {
     res.status(200).json(updatedSubject);
   } catch (error) {
     console.log(error);
+    next();
   }
 };
 
@@ -47,7 +51,7 @@ export const deleteMaterial = async (req, res, next) => {
     const subject = await Subject.findOne({ "materials.materialTitle": title });
 
     if (!subject) {
-      return res.status(404).json("material not found");
+      return next(errorHanlder(404, "subject not found"));
     }
 
     const materialIndex = subject.materials.findIndex(
@@ -55,7 +59,7 @@ export const deleteMaterial = async (req, res, next) => {
     );
 
     if (!materialIndex) {
-      return res.status(404).json("material-index not found");
+      return next(errorHanlder(404, "material not found"));
     }
 
     subject.materials.splice(materialIndex, 1);
@@ -65,10 +69,9 @@ export const deleteMaterial = async (req, res, next) => {
     return res.status(200).json("material deleted");
   } catch (error) {
     console.log(error);
-    res.status(500).json("Internal server error");
+    next();
   }
 };
-
 
 export const createSubject = async (req, res, next) => {
   try {
@@ -76,20 +79,22 @@ export const createSubject = async (req, res, next) => {
 
     const newSubject = await Subject.create(subjectData);
 
-    res.status(200).json(newSubject)
+    res.status(200).json(newSubject);
   } catch (error) {
     console.log(error);
+    next();
   }
 };
 
 export const deleteSubject = async (req, res, next) => {
-    try {
-        const id = req.params.id
+  try {
+    const id = req.params.id;
 
-        const deletedSubject = await Subject.findByIdAndDelete(id)
+    await Subject.findByIdAndDelete(id);
 
-        res.status(200).json("deleted")
-    } catch (error) {
-        console.log(error);
-    }
-}
+    res.status(200).json("deleted");
+  } catch (error) {
+    console.log(error);
+    next();
+  }
+};

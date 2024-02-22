@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Modal = ({ toggleModal }) => {
   const [passcode, setPasscode] = useState("");
@@ -14,8 +15,9 @@ const Modal = ({ toggleModal }) => {
       if (passcode === "admin123") {
         toggleModal(false);
         navigate("/admin");
+        toast.success("Passcode matched")
       } else {
-        alert("Passcode does not match");
+        toast.error("Enter valid passcode")
       }
     } catch (error) {
       console.log(error);

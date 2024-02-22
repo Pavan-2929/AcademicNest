@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 const SubjectModal = ({ subjectToggle }) => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,7 @@ const SubjectModal = ({ subjectToggle }) => {
       );
       subjectToggle(false);
       console.log(response);
+      toast.success("Subject added successfully")
     } catch (error) {
       console.log(error);
     }

@@ -26,3 +26,14 @@ mongoose
     console.log("Mongoose connected");
   })
   .catch((error) => console.log(error));
+
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500
+  const message = err.message || "Internal Server error"
+
+  res.status(200).json({
+    success: false,
+    message,
+    statusCode,
+  })
+})

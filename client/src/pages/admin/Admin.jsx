@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SubjectModal from "../../components/SubjectModal";
+import toast from "react-hot-toast";
 
 const Admin = () => {
   const [allSubjects, setAllSubjects] = useState([]);
@@ -32,14 +33,10 @@ const Admin = () => {
         `http://localhost:3000/api/subject/material/add/${subjectId}`,
         newMaterial
       );
-      const updatedSubject = response.data;
-      setAllSubjects((prevSubjects) =>
-        prevSubjects.map((subject) =>
-          subject._id === updatedSubject._id ? updatedSubject : subject
-        )
-      );
+      getAllSubjects()
       setNewMaterial({ materialTitle: "", description: "", fileURL: "" });
       setShowModal(false);
+      toast.success("Material created successfully")
     } catch (error) {
       console.log(error);
     }
@@ -51,6 +48,7 @@ const Admin = () => {
         `http://localhost:3000/api/subject/material/delete/${materialTitle}`
       );
       getAllSubjects();
+      toast.success("Material Deleted Successfully")
     } catch (error) {
       console.log(error);
     }
@@ -67,6 +65,7 @@ const Admin = () => {
 
       console.log(response);
       getAllSubjects()
+      toast.success("Subject deleted successfully")
     } catch (error) {
       console.log(error);
     }
