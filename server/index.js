@@ -9,7 +9,7 @@ import subjectRoutes from "./routes/subject.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
@@ -17,8 +17,8 @@ app.listen(PORT, () => {
   console.log(`Server started at ${PORT}`);
 });
 
-app.use('/api/semester', semesterRoutes)
-app.use('/api/subject', subjectRoutes)
+app.use("/api/semester", semesterRoutes);
+app.use("/api/subject", subjectRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)

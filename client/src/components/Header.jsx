@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import Modal from "./Modal";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -13,8 +15,16 @@ function Header() {
     setIsMenuOpen(false);
   };
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
-    <nav className={`${isMenuOpen ? "bg-gray-200" : "bg-gray-200"} p-4 font-semibold`}>
+    <nav
+      className={`${
+        isMenuOpen ? "bg-gray-200" : "bg-gray-200"
+      } p-4 font-semibold ${isModalOpen ? "bg-opacity-50" : ""}`}
+    >
       <div className="md:flex justify-around items-center">
         <div className="text-[2rem] flex justify-around items-center relative">
           <span className="text-red-500 animate-fire">Auth</span>
@@ -39,13 +49,17 @@ function Header() {
               </NavLink>
             </li>
             <div>
-              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded md:ml-10">
+              <button
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded md:ml-10"
+                onClick={toggleModal}
+              >
                 Admin
               </button>
             </div>
           </ul>
         </div>
       </div>
+      {isModalOpen && <Modal toggleModal={toggleModal} />}
     </nav>
   );
 }
