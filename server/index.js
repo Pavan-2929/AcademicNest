@@ -4,6 +4,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import semesterRoutes from "./routes/semester.routes.js";
+import subjectRoutes from "./routes/subject.routes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,7 @@ app.listen(PORT, () => {
 });
 
 app.use('/api/semester', semesterRoutes)
+app.use('/api/subject', subjectRoutes)
 
 mongoose
   .connect(process.env.MONGO_URI)

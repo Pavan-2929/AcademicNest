@@ -1,19 +1,13 @@
 import mongoose from "mongoose";
 
-const subjectSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  semester: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Semester",
-    required: true,
-  },
+const subjectSchema = new mongoose.Schema({
+  subjectName: String,
+  semesterNumber: Number, 
   materials: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Material",
+      materialTitle: String,
+      description: String,
+      fileURL: String,
     },
   ],
 });

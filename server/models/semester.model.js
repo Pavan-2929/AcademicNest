@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const semesterSchema = mongoose.Schema({
+const semesterSchema = new mongoose.Schema({
   semesterName: {
     type: String,
     required: true,
@@ -16,6 +16,6 @@ const semesterSchema = mongoose.Schema({
   },
 });
 
-const Semester = new mongoose.model("Semester", semesterSchema)
+const Semester = mongoose.model("Semester", semesterSchema)
 
 export default Semester
