@@ -12,6 +12,7 @@ const Modal = ({ toggleModal }) => {
   const handleSubmit = () => {
     try {
       if (passcode === "admin123") {
+        toggleModal(false)
         navigate("/admin");
       } else {
         alert("Passcode does not match");
