@@ -68,3 +68,28 @@ export const deleteMaterial = async (req, res, next) => {
     res.status(500).json("Internal server error");
   }
 };
+
+
+export const createSubject = async (req, res, next) => {
+  try {
+    const subjectData = req.body;
+
+    const newSubject = await Subject.create(subjectData);
+
+    res.status(200).json(newSubject)
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteSubject = async (req, res, next) => {
+    try {
+        const id = req.params.id
+
+        const deletedSubject = await Subject.findByIdAndDelete(id)
+
+        res.status(200).json("deleted")
+    } catch (error) {
+        console.log(error);
+    }
+}
