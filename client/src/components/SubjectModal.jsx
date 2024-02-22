@@ -21,7 +21,7 @@ const SubjectModal = ({ subjectToggle }) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/subject/add",
+        "https://academicnest-server.onrender.com/api/subject/add",
         formData
       );
       subjectToggle(false);

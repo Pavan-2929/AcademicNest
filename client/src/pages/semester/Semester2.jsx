@@ -7,7 +7,7 @@ const Semester2 = () => {
   const getSem2Data = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/subject/get/2`
+        `https://academicnest-server.onrender.com/api/subject/get/2`
       );
       setAllSubjects(response.data);
     } catch (error) {

@@ -7,7 +7,9 @@ const Material = () => {
 
   const fetchsemestersData = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/semester/get");
+      const response = await axios.get(
+        "https://academicnest-server.onrender.com/api/semester/get"
+      );
       setSemesterData(response.data);
     } catch (error) {
       console.log(error);

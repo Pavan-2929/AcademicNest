@@ -30,7 +30,9 @@ const Admin = () => {
 
   const getAllSubjects = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/subject/get");
+      const response = await axios.get(
+        "https://academicnest-server.onrender.com/api/subject/get"
+      );
       setAllSubjects(response.data);
     } catch (error) {
       console.log(error);
@@ -40,7 +42,7 @@ const Admin = () => {
   const addMaterialHandler = async (subjectId) => {
     try {
       const response = await axios.post(
-        `http://localhost:3000/api/subject/material/add/${subjectId}`,
+        `https://academicnest-server.onrender.com/api/subject/material/add/${subjectId}`,
         newMaterial
       );
       getAllSubjects();
@@ -55,7 +57,7 @@ const Admin = () => {
   const deleteMaterial = async (materialTitle) => {
     try {
       await axios.delete(
-        `http://localhost:3000/api/subject/material/delete/${materialTitle}`
+        `https://academicnest-server.onrender.com/api/subject/material/delete/${materialTitle}`
       );
       getAllSubjects();
       toast.success("Material Deleted Successfully");
@@ -72,7 +74,7 @@ const Admin = () => {
   const deleteSubject = async (id) => {
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/subject/delete/${id}`
+        `https://academicnest-server.onrender.com/api/subject/delete/${id}`
       );
 
       console.log(response);
