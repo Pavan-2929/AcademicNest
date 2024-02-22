@@ -1,15 +1,19 @@
 import mongoose from "mongoose";
 
 const semesterSchema = mongoose.Schema({
-  semesterNumber: {
+  semesterName: {
     type: String,
     required: true,
     unique: true,
   },
-  subjects: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Subject"
-  }]
+  description: {
+    type: String,
+    required: true,
+  },
+  subjects: {
+    type: [String],
+    default: [],
+  },
 });
 
 const Semester = new mongoose.model("Semester", semesterSchema)

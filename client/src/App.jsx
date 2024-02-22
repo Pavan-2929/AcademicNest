@@ -3,6 +3,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Header from './components/Header'
 import Material from './pages/Material'
 import About from './pages/About'
+import Semester1 from './pages/semester/Semester1'
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
     <Routes>
       <Route path='/' element={<Material/>}/>
       <Route path='/about' element={<About/>} />
+      <Route path='/semester-1' element={<Semester1/>} />
     </Routes>
     </BrowserRouter>
     </>
