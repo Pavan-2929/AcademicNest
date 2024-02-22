@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SubjectModal from "../../components/SubjectModal";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
+  const navigate = useNavigate();
+
   const [allSubjects, setAllSubjects] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [subjectModal, setSubjectModal] = useState(false);
@@ -13,10 +16,17 @@ const Admin = () => {
     description: "",
     fileURL: "",
   });
+  let isToken;
 
   useEffect(() => {
+    isToken = localStorage.getItem("token");
+    console.log(isToken);
+    if (!isToken) {
+      navigate("/");
+      return;
+    }
     getAllSubjects();
-  }, []);
+  }, [isToken]);
 
   const getAllSubjects = async () => {
     try {
@@ -33,10 +43,10 @@ const Admin = () => {
         `http://localhost:3000/api/subject/material/add/${subjectId}`,
         newMaterial
       );
-      getAllSubjects()
+      getAllSubjects();
       setNewMaterial({ materialTitle: "", description: "", fileURL: "" });
       setShowModal(false);
-      toast.success("Material created successfully")
+      toast.success("Material created successfully");
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +58,7 @@ const Admin = () => {
         `http://localhost:3000/api/subject/material/delete/${materialTitle}`
       );
       getAllSubjects();
-      toast.success("Material Deleted Successfully")
+      toast.success("Material Deleted Successfully");
     } catch (error) {
       console.log(error);
     }
@@ -56,20 +66,22 @@ const Admin = () => {
 
   const subjectToggle = () => {
     setSubjectModal(!subjectModal);
-    getAllSubjects()
+    getAllSubjects();
   };
 
   const deleteSubject = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/subject/delete/${id}`)
+      const response = await axios.delete(
+        `http://localhost:3000/api/subject/delete/${id}`
+      );
 
       console.log(response);
-      getAllSubjects()
-      toast.success("Subject deleted successfully")
+      getAllSubjects();
+      toast.success("Subject deleted successfullyi di");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <div className="container mx-auto px-4 pb-8">
@@ -108,11 +120,18 @@ const Admin = () => {
                 </button>
               </div>
             </div>
-            <p className="text-gray-600 mb-2">Semester: {subject.semesterNumber}</p>
+            <p className="text-gray-600 mb-2">
+              Semester: {subject.semesterNumber}
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {subject.materials.map((material) => (
-                <div key={material._id} className="bg-gray-300 rounded-lg shadow-md p-4">
-                  <h3 className="text-lg font-semibold mb-2">{material.materialTitle}</h3>
+                <div
+                  key={material._id}
+                  className="bg-gray-300 rounded-lg shadow-md p-4"
+                >
+                  <h3 className="text-lg font-semibold mb-2">
+                    {material.materialTitle}
+                  </h3>
                   <p className="text-gray-600 mb-2">{material.description}</p>
                   {material.fileURL ? (
                     <>
@@ -161,7 +180,10 @@ const Admin = () => {
                 placeholder="Material Title"
                 value={newMaterial.materialTitle}
                 onChange={(e) =>
-                  setNewMaterial({ ...newMaterial, materialTitle: e.target.value })
+                  setNewMaterial({
+                    ...newMaterial,
+                    materialTitle: e.target.value,
+                  })
                 }
                 required
                 className="block w-full mt-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -171,7 +193,10 @@ const Admin = () => {
                 placeholder="Description"
                 value={newMaterial.description}
                 onChange={(e) =>
-                  setNewMaterial({ ...newMaterial, description: e.target.value })
+                  setNewMaterial({
+                    ...newMaterial,
+                    description: e.target.value,
+                  })
                 }
                 required
                 className="block w-full mt-2 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"

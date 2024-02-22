@@ -14,6 +14,7 @@ const Modal = ({ toggleModal }) => {
     try {
       if (passcode === "admin123") {
         toggleModal(false);
+        localStorage.setItem("token", "admin-token")
         navigate("/admin");
         toast.success("Passcode matched")
       } else {
