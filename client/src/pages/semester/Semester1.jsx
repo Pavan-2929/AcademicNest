@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Loader from "../../components/Loader";
 
 const Semester1 = () => {
   const [allSubjects, setAllSubjects] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getSem1Data = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         `https://academicnest-server.onrender.com/api/subject/get/1`
       );
       setAllSubjects(response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -21,7 +26,7 @@ const Semester1 = () => {
 
   return (
     <div className="container mx-auto md:px-6 px-1">
-      {allSubjects.map((subject) => (
+      {isLoading ? <Loader/> : allSubjects.map((subject) => (
         <div
           key={subject._id}
           className="my-14 bg-gray-200 shadow-md rounded-lg md:p-6 p-2"

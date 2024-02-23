@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.active {
+  color: red;
+  border-color: red; 
+  border-bottom: 2px solid red; 
+}
+
+.spin-faster {
+  animation-duration: 0.5s; 
+}

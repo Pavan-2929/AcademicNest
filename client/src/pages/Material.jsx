@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import SemesterCard from "../components/SemesterCard";
+import Loader from "../components/Loader";
 
 const Material = () => {
   const [semestersData, setSemesterData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchsemestersData = async () => {
     try {
+      setIsLoading(true)
       const response = await axios.get(
         "https://academicnest-server.onrender.com/api/semester/get"
       );
       setSemesterData(response.data);
+      setIsLoading(false)
     } catch (error) {
       console.log(error);
+      setIsLoading(false)
     }
   };
 
@@ -27,7 +32,7 @@ const Material = () => {
           Find the Material according to your semesters
         </h1>
       </div>
-      <SemesterCard semestersData={semestersData} />
+      {isLoading ? <Loader /> : <SemesterCard semestersData={semestersData} />}
     </div>
   );
 };

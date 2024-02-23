@@ -3,6 +3,7 @@ import axios from "axios";
 import SubjectModal from "../../components/SubjectModal";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ const Admin = () => {
   const [showModal, setShowModal] = useState(false);
   const [subjectModal, setSubjectModal] = useState(false);
   const [selectedSubjectId, setSelectedSubjectId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [newMaterial, setNewMaterial] = useState({
     materialTitle: "",
     description: "",
@@ -20,7 +22,6 @@ const Admin = () => {
 
   useEffect(() => {
     isToken = localStorage.getItem("token");
-    console.log(isToken);
     if (!isToken) {
       navigate("/");
       return;
@@ -30,11 +31,14 @@ const Admin = () => {
 
   const getAllSubjects = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.get(
         "https://academicnest-server.onrender.com/api/subject/get"
       );
       setAllSubjects(response.data);
+      setIsLoading(false);
     } catch (error) {
+      setIsLoading(false);
       console.log(error);
     }
   };
@@ -99,7 +103,7 @@ const Admin = () => {
         </button>
       </div>
       {subjectModal && <SubjectModal subjectToggle={subjectToggle} />}
-      {allSubjects.map((subject) => (
+      {isLoading ? <Loader/> : allSubjects.map((subject) => (
         <div key={subject._id} className="mb-8 pb-8 border-gray-400 border-b-2">
           <div className="bg-gray-200 rounded-lg shadow-md p-6">
             <div className="md:flex justify-between items-center mb-4">
